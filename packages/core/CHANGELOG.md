@@ -1,5 +1,49 @@
 # @wagmi/core
 
+## 0.6.0
+
+### Minor Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `watchSigner` now requires an arguments object (that accepts an optional `chainId`) as it's first parameter.
+
+  ```diff
+  import { watchSigner } from `@wagmi/core`
+
+  -watchSigner(signer => {
+  +watchSigner({}, signer => {
+    console.log('new signer!', signer)
+  })
+  ```
+
+* [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `prepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `prepareWriteContract` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+* [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `prepareSendTransaction` now only accepts a `signer` instead of `signerOrProvider`.
+
+  This is to reach parity with `prepareWriteContract`.
+
+  If no `signer` is provided, wagmi will use the signer that is currently connected. If no user is connected, then `prepareWriteContract` will throw an error.
+
+### Patch Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - The `fetchSigner` action now accepts an optional `chainId` to use for signer initialization as an argument.
+
+  ```tsx
+  import { fetchSigner } from '@wagmi/core'
+  import { optimism } from '@wagmi/core/chains'
+
+  // ...
+
+  fetchSigner({ chainId: optimism.id })
+  ```
+
+* [#1008](https://github.com/wagmi-dev/wagmi/pull/1008) [`dacab21`](https://github.com/wagmi-dev/wagmi/commit/dacab21810e48d6ab5920d6013a3a43a09a2f180) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` as an argument to `watchBlockNumber`.
+
+- [#997](https://github.com/wagmi-dev/wagmi/pull/997) [`16710ec`](https://github.com/wagmi-dev/wagmi/commit/16710ec773f7aaeaa133d18a07bb8a2e9b542acc) Thanks [@tmm](https://github.com/tmm)! - Added missing `decimals` option to `Connector` `watchAsset`
+
+* [#993](https://github.com/wagmi-dev/wagmi/pull/993) [`381531e`](https://github.com/wagmi-dev/wagmi/commit/381531ee25ea45a6fb4d0e2fe97e309af41b34dd) Thanks [@jxom](https://github.com/jxom)! - Support ERC20 contracts that represent strings as bytes32
+
 ## 0.5.7
 
 ### Patch Changes

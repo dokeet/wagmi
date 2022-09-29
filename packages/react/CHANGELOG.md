@@ -1,5 +1,84 @@
 # wagmi
 
+## 0.7.0
+
+### Minor Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `usePrepareContractWrite` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+  If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead:
+
+  ```diff
+  import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+  import { optimism } from 'wagmi/chains'
+
+  // ...
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { write } = useContractWrite({
+    ...config,
+  + chainId: optimism.id
+  })
+
+  ```
+
+* [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `usePrepareSendTransaction` hook will now only run when the end-user is connected to their wallet.
+
+  This is to reach parity with `usePrepareContractWrite`.
+
+  If the end-user is not connected, then the `usePrepareSendTransaction` hook will remain idle.
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `usePrepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+  If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead:
+
+  ```diff
+  import { usePrepareSendTransaction, useContractWrite } from 'wagmi'
+  import { optimism } from 'wagmi/chains'
+
+  // ...
+
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'moxey.eth',
+      value: parseEther('1'),
+    },
+  })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
+  + chainId: optimism.id
+  })
+
+  ```
+
+### Patch Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - The `useSigner` hook now accepts an optional `chainId` to use for signer initialization as an argument.
+
+  ```tsx
+  import { useSigner } from 'wagmi'
+  import { optimism } from 'wagmi/core'
+
+  // ...
+
+  useSigner({ chainId: optimism.id })
+  ```
+
+* [`1ed592d`](https://github.com/wagmi-dev/wagmi/commit/1ed592d8f28de206d14a737ce8a7277a03ba9f43) Thanks [@jxom](https://github.com/jxom)! - Isolate wagmi's React Query `queryClient` instance.
+
+- [#1008](https://github.com/wagmi-dev/wagmi/pull/1008) [`dacab21`](https://github.com/wagmi-dev/wagmi/commit/dacab21810e48d6ab5920d6013a3a43a09a2f180) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` as an argument to `watchBlockNumber`.
+
+* [#997](https://github.com/wagmi-dev/wagmi/pull/997) [`16710ec`](https://github.com/wagmi-dev/wagmi/commit/16710ec773f7aaeaa133d18a07bb8a2e9b542acc) Thanks [@tmm](https://github.com/tmm)! - Added missing `decimals` option to `Connector` `watchAsset`
+
+- [#993](https://github.com/wagmi-dev/wagmi/pull/993) [`381531e`](https://github.com/wagmi-dev/wagmi/commit/381531ee25ea45a6fb4d0e2fe97e309af41b34dd) Thanks [@jxom](https://github.com/jxom)! - Support ERC20 contracts that represent strings as bytes32
+
+- Updated dependencies [[`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`dacab21`](https://github.com/wagmi-dev/wagmi/commit/dacab21810e48d6ab5920d6013a3a43a09a2f180), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`16710ec`](https://github.com/wagmi-dev/wagmi/commit/16710ec773f7aaeaa133d18a07bb8a2e9b542acc), [`381531e`](https://github.com/wagmi-dev/wagmi/commit/381531ee25ea45a6fb4d0e2fe97e309af41b34dd)]:
+  - @wagmi/core@0.6.0
+
 ## 0.6.7
 
 ### Patch Changes
